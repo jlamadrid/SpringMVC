@@ -2,6 +2,7 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:p="http://www.springframework.org/schema/p"
              xmlns:context="http://www.springframework.org/schema/context"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
@@ -22,15 +23,45 @@
     (for example, CSS, JavaScript, images, and so on)
     and their locations so Spring MVC can improve the
     performance in serving those files.
-    -->
+
     <resources mapping="/resources/**" location="/resources/" />
+    -->
+    <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
+
+    <!--
+    Enables the mapping of the DispatcherServlet to the web application's root context URL,
+    while still allowing static resource requests to be handled by the container's default servlet.
+    -->
+    <default-servlet-handler/>
 
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/WEB-INF/views/" />
         <beans:property name="suffix" value=".jspx" />
     </beans:bean>
 
-    <context:component-scan
-            base-package="com.juan.springmvc.web.controller" />
+    <context:component-scan base-package="com.juan.springmvc.web.controller" />
+
+    <interceptors>
+        <!--
+        Spring MVC interceptor with class LocaleChangeInterceptor is defined,
+        which intercepts all the requests to the DispatcherServlet. The interceptor
+        supports locale switching with a configurable request parameter. From the
+        interceptor configuration, the URL param with the name lang is defined for
+        changing the locale for the application.
+        -->
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+                    p:paramName="lang"/>
+
+    </interceptors>
+
+    <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+                id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
+                p:fallbackToSystemLocale="false"/>
+
+    <!--
+    This class supports the storage and retrieval of locale settings from the user browser's cookie.
+    -->
+    <beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
+                id="localeResolver" p:cookieName="locale"/>
 
 </beans:beans>
