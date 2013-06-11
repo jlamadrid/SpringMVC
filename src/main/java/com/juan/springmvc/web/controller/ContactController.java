@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -90,7 +91,7 @@ public class ContactController {
      * @return
      */
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.POST)
-    public String update(Contact contact, BindingResult bindingResult, Model uiModel,
+    public String update(@Valid Contact contact, BindingResult bindingResult, Model uiModel,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 
         logger.info("Updating contact");
@@ -120,8 +121,21 @@ public class ContactController {
         return "contacts/update";
     }
 
+    /**
+     * Note the use of @Valid to enable JSR-303 validations as defined in the entity class.
+     * We also want the JSR-303 validation message to use the same ResourceBundle as for the views. To do this,
+     * we need to configure the validator in the DispatcherServlet configuration (servlet-context.xml)
+     *
+     * @param contact
+     * @param bindingResult
+     * @param uiModel
+     * @param httpServletRequest
+     * @param redirectAttributes
+     * @param locale
+     * @return
+     */
     @RequestMapping(params = "form", method = RequestMethod.POST)
-    public String create(Contact contact, BindingResult bindingResult, Model uiModel,
+    public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel,
                          HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 
         logger.info("Creating contact");

@@ -9,8 +9,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -40,11 +42,24 @@ public class Contact implements Serializable {
         return version;
     }
 
+    /**
+     * For the validation message, we use a code by using the curly braces. This will cause the
+     * validation messages to retrieve from the ResourceBundle and hence support i18n.
+     *
+     * To enable JSR-303 validation during the web data binding process, we just need to apply the
+     * @Valid annotation to the argument of the create() and update() methods in the ContactController class.
+     *
+     * @return
+     */
+    @NotEmpty(message="{validation.firstname.NotEmpty.message}")
+    @Size(min=3, max=60, message="{validation.firstname.Size.message}")
     @Column(name = "FIRST_NAME")
     public String getFirstName() {
         return firstName;
     }
 
+    @NotEmpty(message="{validation.lastname.NotEmpty.message}")
+    @Size(min=1, max=40, message="{validation.lastname.Size.message}")
     @Column(name = "LAST_NAME")
     public String getLastName() {
         return lastName;

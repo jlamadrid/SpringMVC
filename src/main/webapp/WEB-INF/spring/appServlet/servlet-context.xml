@@ -16,7 +16,11 @@
     as well as enabling Spring 3 type conversion and formatting support.
     Also, support for JSR-303 Bean Validation is enabled by this tag.
     -->
-    <annotation-driven />
+    <annotation-driven validator="validator"/>
+
+    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <beans:property name="validationMessageSource" ref="messageSource"/>
+    </beans:bean>
 
     <!--
     The <resources> tag defines the static resources
