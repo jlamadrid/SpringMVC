@@ -16,6 +16,8 @@ public interface ContactService {
 
     public Contact findById(Long id);
 
+    public void deleteById(Long id);
+
     public Contact save(Contact contact);
 
     public Page<Contact> findAllByPage(Pageable pageable);

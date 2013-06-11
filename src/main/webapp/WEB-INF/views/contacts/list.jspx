@@ -47,7 +47,7 @@
                 width: 500,
                 caption: '${labelContactList}',
                 onSelectRow: function(id){
-                    document.location.href ="${showContactUrl}/" + id;
+                    document.location.href ="${showContactUrl}" + id;
                 }
             });
         });

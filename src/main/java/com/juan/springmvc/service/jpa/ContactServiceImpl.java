@@ -33,6 +33,11 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.findOne(id);
     }
 
+    @Override
+    public void deleteById(Long id) {
+        contactRepository.delete(id);
+    }
+
     public Contact save(Contact contact) {
         return contactRepository.save(contact);
     }

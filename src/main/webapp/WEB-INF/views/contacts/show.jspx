@@ -14,11 +14,13 @@
     <spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
     <spring:message code="label_contact_description" var="labelContactDescription"/>
     <spring:message code="label_contact_update" var="labelContactUpdate"/>
+    <spring:message code="label_contact_delete" var="labelContactDelete"/>
     <spring:message code="date_format_pattern" var="dateFormatPattern"/>
     
     <spring:message code="label_contact_photo" var="labelContactPhoto"/>
     
-    <spring:url value="/contacts" var="editContactUrl"/>    
+    <spring:url value="/contacts" var="editContactUrl"/>
+    <spring:url value="/contacts/delete" var="deleteContactUrl"/>
     <spring:url value="/contacts/photo" var="contactPhotoUrl"/>
 
     <h1>${labelContactInfo}</h1>
@@ -52,7 +54,8 @@
             </tr>                                                                                                         
         </table>         
        
-        <a href="${editContactUrl}/${contact.id}?form">${labelContactUpdate}</a>     
+        <a href="${editContactUrl}/${contact.id}?form">${labelContactUpdate}</a> |
+        <a href="${deleteContactUrl}/${contact.id}">${labelContactDelete}</a>
                       
     </div>
 

@@ -218,4 +218,13 @@ public class ContactController {
 
         return contactGrid;
     }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String delete(@PathVariable("id") Long id) {
+
+        logger.info("Delete contact for id:", id);
+        contactService.deleteById(id);
+
+        return "redirect:/contacts";
+    }
 }
