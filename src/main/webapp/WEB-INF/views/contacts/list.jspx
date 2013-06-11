@@ -14,6 +14,8 @@
 
     <h1>${labelContactList}</h1>
 
+    <spring:url value="/contacts/" var="showContactUrl"/>
+
     <c:if test="${not empty contacts}">
         <table>
             <thead>
@@ -26,7 +28,7 @@
             <tbody>
             <c:forEach items="${contacts}" var="contact">
                 <tr>
-                    <td>${contact.firstName}</td>
+                    <td><a href="${showContactUrl}/${contact.id}">${contact.firstName}</a></td>
                     <td>${contact.lastName}</td>
                     <td><joda:format value="${contact.birthDate}" pattern="yyyy-MM-dd"/></td>
                 </tr>
@@ -35,5 +37,4 @@
         </table>
 
     </c:if>
-
 </div>
