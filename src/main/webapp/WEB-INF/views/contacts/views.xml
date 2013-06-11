@@ -20,4 +20,8 @@
         <put-attribute name="body" value="/WEB-INF/views/contacts/edit.jspx" />
     </definition>
 
+    <definition extends="default" name="contacts/create">
+        <put-attribute name="body" value="/WEB-INF/views/contacts/edit.jspx" />
+    </definition>
+
 </tiles-definitions>

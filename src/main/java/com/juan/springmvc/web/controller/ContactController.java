@@ -119,4 +119,39 @@ public class ContactController {
         uiModel.addAttribute("contact", contactService.findById(id));
         return "contacts/update";
     }
+
+    @RequestMapping(params = "form", method = RequestMethod.POST)
+    public String create(Contact contact, BindingResult bindingResult, Model uiModel,
+                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+
+        logger.info("Creating contact");
+        if (bindingResult.hasErrors()) {
+            uiModel.addAttribute("message", new Message("error",
+                    messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
+            uiModel.addAttribute("contact", contact);
+            return "contacts/create";
+        }
+
+        uiModel.asMap().clear();
+        redirectAttributes.addFlashAttribute("message", new Message("success",
+                messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
+
+        logger.info("Contact id: " + contact.getId());
+
+        contactService.save(contact);
+        return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(),
+                httpServletRequest);
+    }
+
+    /**
+     * Responds to http://localhost:8080/contacts?form
+     * @param uiModel
+     * @return
+     */
+    @RequestMapping(params = "form", method = RequestMethod.GET)
+    public String createForm(Model uiModel) {
+        Contact contact = new Contact();
+        uiModel.addAttribute("contact", contact);
+        return "contacts/create";
+    }
 }
