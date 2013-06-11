@@ -22,7 +22,9 @@
     <spring:eval expression="contact.id == null ? labelContactNew : labelContactUpdate" var="formTitle"/>
 
     <script type="text/javascript">
-    $(function(){ 
+
+    $(function(){
+        //decorated using jQuery UI's datepicker() function
         $('#birthDate').datepicker({ 
             dateFormat: 'yy-mm-dd',
             changeYear: true
@@ -89,7 +91,8 @@
         <p/>          
         
         <form:hidden path="version" />
-        
+
+        <!-- new button styles -->
         <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
             <span class="ui-button-text">Save</span>
         </button> 

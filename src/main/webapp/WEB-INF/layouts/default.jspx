@@ -17,10 +17,20 @@
         <spring:url value="/${app_css}" var="app_css_url" />
         <link rel="stylesheet" type="text/css" media="screen" href="${app_css_url}" />
 		
-        <!-- jQuery and jQuery UI -->
+        <!--
+        Add jQuery and jQuery UI
+        <spring:url> tag is used to define the URLs for the files and store them in variables.
+        -->
         <spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_url" />
         <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_url" />          
-        <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />        
+        <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
+
+        <!--
+        Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
+        tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
+        browser, which will cause undetermined behavior in the page. The addition of the <jsp:text/> ensures
+        that the <script> tag will not render in the page because it avoids unexpected issues.
+        -->
         <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />        
         <script src="${jquery_url}" type="text/javascript"><jsp:text/></script>
         <script src="${jquery_ui_url}" type="text/javascript"><jsp:text/></script>
