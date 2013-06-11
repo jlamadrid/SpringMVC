@@ -49,10 +49,16 @@
         interceptor configuration, the URL param with the name lang is defined for
         changing the locale for the application.
         -->
-        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
-                    p:paramName="lang"/>
+        <beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang"/>
+
+        <!--
+        Theming support interceptor
+        The ThemeChangeInterceptor class intercepts every request for changing the theme.
+        -->
+        <beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
 
     </interceptors>
+
 
     <beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
                 id="messageSource" p:basenames="WEB-INF/i18n/messages,WEB-INF/i18n/application"
@@ -63,5 +69,25 @@
     -->
     <beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver"
                 id="localeResolver" p:cookieName="locale"/>
+
+    <!--
+    Theming support beans
+    -->
+
+    <!--
+    ResourceBundleThemeSource class, is responsible for loading the ResourceBundle of the active theme.
+    For example, if the active theme is called standard, the bean will look for the file standard.properties
+    as the ResourceBundle of the theme.
+    -->
+    <beans:bean class="org.springframework.ui.context.support.ResourceBundleThemeSource" id="themeSource"/>
+
+    <!--
+    CookieThemeResolver class, is used to resolve the active theme for users. The property
+    defaultThemeName defines the default theme to use, which is the standard theme.
+    Note that as its name implies, the CookieThemeResolver class uses cookies to store the theme for the user.
+    There also exists the SessionThemeResolver class that stores the theme attribute in a user's session.
+    -->
+    <beans:bean class="org.springframework.web.servlet.theme.CookieThemeResolver"
+                id="themeResolver" p:cookieName="theme" p:defaultThemeName="standard"/>
 
 </beans:beans>
