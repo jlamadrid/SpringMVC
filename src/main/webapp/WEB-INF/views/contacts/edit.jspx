@@ -29,7 +29,8 @@
             dateFormat: 'yy-mm-dd',
             changeYear: true
         });
-        
+
+        //add ck editor
         $("#contactDescription").ckeditor(
             {
                 toolbar : 'Basic',
