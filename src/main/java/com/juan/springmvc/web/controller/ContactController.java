@@ -34,6 +34,6 @@ public class ContactController {
 
         logger.info("No. of contacts: " + contacts.size());
 
-        return "contacts/list";
+        return "contacts/list"; //logical view name defined in tiles contacts/views.xml
     }
 }
