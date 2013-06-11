@@ -41,7 +41,7 @@
         <script type="text/javascript" src="${ckeditor_url}"><jsp:text/></script>
         <script type="text/javascript" src="${ckeditor_jquery_url}"><jsp:text/></script>		
 
-        <!-- jqGrid -->
+        <!-- jqGrid for pagination-->
         <spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css" />
         <spring:url value="/resources/jqgrid/js/i18n/grid.locale-en.js" var="jqgrid_locale_url" />
         <spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url" />
