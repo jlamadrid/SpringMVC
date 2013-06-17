@@ -27,10 +27,8 @@
     (for example, CSS, JavaScript, images, and so on)
     and their locations so Spring MVC can improve the
     performance in serving those files.
-
-    <resources mapping="/resources/**" location="/resources/" />
     -->
-    <resources location="/, classpath:/META-INF/web-resources/" mapping="/resources/**"/>
+    <resources mapping="/resources/**" location="/resources/" />
 
     <!--
     Enables the mapping of the DispatcherServlet to the web application's root context URL,

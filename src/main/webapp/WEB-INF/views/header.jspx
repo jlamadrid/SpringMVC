@@ -1,4 +1,4 @@
-<div id="header" xmlns:jsp="http://java.sun.com/JSP/Page"
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
 	xmlns:spring="http://www.springframework.org/tags" 
 	xmlns:sec="http://www.springframework.org/security/tags" 
 	version="2.0">
@@ -6,20 +6,22 @@
 	<jsp:output omit-xml-declaration="yes" />
 	
 	<spring:message code="header_text" var="headerText"/>
-    <spring:message code="label_logout" var="labelLogout"/>
-    <spring:message code="label_welcome" var="labelWelcome"/>
-    <spring:url var="logoutUrl" value="/j_spring_security_logout" />    	
 
-    <div id="appname">
-        <h1>${headerText}</h1>
-    </div>
-
-    <div id="userinfo">
-        <sec:authorize access="isAuthenticated()">${labelWelcome} 
-            <sec:authentication property="principal.username" />
-            <br/>
-            <a href="${logoutUrl}">${labelLogout}</a>
-        </sec:authorize>                    
-    </div>  
+    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="brand" href="#">${headerText}</a>
+    <div class="nav-collapse collapse">
+        <p class="navbar-text pull-right">
+            Logged in as <a href="#" class="navbar-link">Username</a>
+        </p>
+        <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div><!--/.nav-collapse -->
 
 </div>

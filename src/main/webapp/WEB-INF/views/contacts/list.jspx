@@ -12,12 +12,13 @@
     <spring:message code="label_contact_last_name" var="labelContactLastName"/>
     <spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
 
-    <h1>${labelContactList}</h1>
+    <h4>${labelContactList}</h4>
 
     <spring:url value="/contacts/" var="showContactUrl"/>
 
     <script type="text/javascript">
         $(function(){
+
             $("#list").jqGrid({
                 url:'${showContactUrl}/listgrid',
                 datatype: 'json',
@@ -57,11 +58,7 @@
         <div id="message" class="${message.type}">${message.message}</div>
     </c:if>
 
-    <h2>${labelContactList}</h2>
-
-    <div>
-        <table id="list"><tr><td/></tr></table>
-    </div>
+    <table id="list"><tr><td/></tr></table>
     <div id="pager"></div>
 
 </div>

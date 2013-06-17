@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+<tiles-definitions>
+
+    <!--
+       the logical view name is mapped to the corresponding body attribute of the view to display.
+       As in the ContactController class in Listing 17-11, the list() method returns the logical
+       view name contacts/list, so Tiles will be able to map the view name to the correct template
+       and the view body to display.
+    -->
+    <definition extends="single-column" name="home">
+        <put-attribute name="body" value="/WEB-INF/views/home/home.jspx" />
+    </definition>
+
+</tiles-definitions>

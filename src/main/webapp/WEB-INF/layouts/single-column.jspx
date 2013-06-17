@@ -12,15 +12,6 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
-
-
-
-        <!--
-        Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
-        tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
-        browser, which will cause undetermined behavior in the page. The addition of the <jsp:text/> ensures
-        that the <script> tag will not render in the page because it avoids unexpected issues.
-        -->
 		
         <!--
         Add jQuery and jQuery UI
@@ -34,21 +25,6 @@
         <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
         <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
 
-        <!-- jqGrid for pagination-->
-        <spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css" />
-        <spring:url value="/resources/jqgrid/js/i18n/grid.locale-en.js" var="jqgrid_locale_url" />
-        <spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url" />
-
-        <link rel="stylesheet" type="text/css" media="screen" href="${jqgrid_css}" />
-        <script type="text/javascript" src="${jqgrid_locale_url}"><jsp:text/></script>
-        <script type="text/javascript" src="${jqgrid_url}"><jsp:text/></script>
-
-        <!-- CKEditor -->
-        <spring:url value="/resources/ckeditor/ckeditor.js" var="ckeditor_url" />
-        <spring:url value="/resources/ckeditor/adapters/jquery.js" var="ckeditor_jquery_url" />
-        <script type="text/javascript" src="${ckeditor_url}"><jsp:text/></script>
-        <script type="text/javascript" src="${ckeditor_jquery_url}"><jsp:text/></script>
-
         <!-- Bootstrap -->
         <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
         <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
@@ -60,20 +36,42 @@
 
         <style type="text/css">
             body {
-                padding-top: 60px;
+                padding-top: 20px;
                 padding-bottom: 40px;
             }
-            .sidebar-nav {
-                padding: 9px 0;
+
+            /* Custom container */
+            .container-narrow {
+                margin: 0 auto;
+                max-width: 700px;
             }
 
-            @media (max-width: 980px) {
-                /* Enable use of floated navbar text */
-                .navbar-text.pull-right {
-                    float: none;
-                    padding-left: 5px;
-                    padding-right: 5px;
-                }
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+            .jumbotron {
+                margin: 60px 0;
+                text-align: center;
+            }
+
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+            /* Supporting marketing content */
+            .marketing {
+                margin: 60px 0;
+            }
+
+            .marketing p + h4 {
+                margin-top: 28px;
             }
         </style>
 
@@ -98,33 +96,10 @@
 	
   	<body >
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <tiles:insertAttribute name="header" ignore="true" />
-                </div>
-            </div>
-        </div>
+        <div class="container-narrow">
 
-   		<div class="container-fluid">
-
-            <div class="row-fluid">
-                <div class="span2">
-                    <div class="well sidebar-nav">
-		                <tiles:insertAttribute name="menu" ignore="true" />
-                    </div><!--/.well -->
-                </div><!--/span-->
-
-                <div class="span9">
-	    		    <tiles:insertAttribute name="body"/>
-                </div>
-		    </div>
+            <tiles:insertAttribute name="body"/>
 
         </div>
-
-
-        <footer>
-            <tiles:insertAttribute name="footer" ignore="true"/>
-        </footer>
 	</body>
 </html>
