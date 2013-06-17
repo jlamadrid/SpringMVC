@@ -1,0 +1,105 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+      xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+      xmlns:spring="http://www.springframework.org/tags">  
+
+    <jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
+    
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />  
+    <jsp:directive.page pageEncoding="UTF-8" /> 
+		
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+		
+        <!--
+        Add jQuery and jQuery UI
+        <spring:url> tag is used to define the URLs for the files and store them in variables.
+        -->
+        <spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_js" />
+        <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_js" />
+        <script src="${jquery_js}" type="text/javascript"><jsp:text/></script>
+        <script src="${jquery_ui_js}" type="text/javascript"><jsp:text/></script>
+
+        <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
+
+        <!-- Bootstrap -->
+        <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
+        <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
+        <spring:url value="/resources/styles/bootstrap-responsive.min.css" var="bootstrap_responsive_css" />
+
+        <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
+
+        <style type="text/css">
+            body {
+                padding-top: 20px;
+                padding-bottom: 40px;
+            }
+
+            /* Custom container */
+            .container-narrow {
+                margin: 0 auto;
+                max-width: 700px;
+            }
+
+            .container-narrow > hr {
+                margin: 30px 0;
+            }
+
+            .jumbotron {
+                margin: 60px 0;
+                text-align: center;
+            }
+
+            .jumbotron h1 {
+                font-size: 72px;
+                line-height: 1;
+            }
+
+            .jumbotron .btn {
+                font-size: 21px;
+                padding: 14px 24px;
+            }
+
+            /* Supporting marketing content */
+            .marketing {
+                margin: 60px 0;
+            }
+
+            .marketing p + h4 {
+                margin-top: 28px;
+            }
+        </style>
+
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+		
+	    <!-- Get the user locale from the page context (it was set by Spring MVC's locale resolver) -->
+	    <c:set var="userLocale">
+	        <c:set var="plocale">${pageContext.response.locale}</c:set>
+	        <c:out value="${fn:replace(plocale, '_', '-')}" default="en" />
+	    </c:set>
+	
+		<spring:message code="application_name" var="app_name" htmlEscape="false"/>
+		<title><spring:message code="welcome_h3" arguments="${app_name}" /></title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+	</head>
+	
+  	<body >
+
+        <div class="container-narrow">
+
+            <tiles:insertAttribute name="body"/>
+
+        </div>
+	</body>
+</html>
