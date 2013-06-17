@@ -12,15 +12,27 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+
+
+        <!--
+        Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
+        tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
+        browser, which will cause undetermined behavior in the page. The addition of the <jsp:text/> ensures
+        that the <script> tag will not render in the page because it avoids unexpected issues.
+        -->
 		
         <!--
         Add jQuery and jQuery UI
         <spring:url> tag is used to define the URLs for the files and store them in variables.
         -->
         <spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_js" />
-        <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_url" />
+        <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_js" />
         <script src="${jquery_js}" type="text/javascript"><jsp:text/></script>
-        <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
+        <script src="${jquery_ui_js}" type="text/javascript"><jsp:text/></script>
+
+        <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
 
         <!-- jqGrid for pagination-->
         <spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css" />
@@ -37,15 +49,12 @@
         <script type="text/javascript" src="${ckeditor_url}"><jsp:text/></script>
         <script type="text/javascript" src="${ckeditor_jquery_url}"><jsp:text/></script>
 
-
-        <!-- Get the user locale from the page context (it was set by Spring MVC's locale resolver) -->
-
-
         <!-- Bootstrap -->
         <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
         <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
         <spring:url value="/resources/styles/bootstrap-responsive.min.css" var="bootstrap_responsive_css" />
 
+        <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
 
@@ -73,17 +82,6 @@
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-
-        <!--
-        Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
-        tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
-        browser, which will cause undetermined behavior in the page. The addition of the <jsp:text/> ensures
-        that the <script> tag will not render in the page because it avoids unexpected issues.
-
-
-        <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
-        <script src="${jquery_ui_url}" type="text/javascript"><jsp:text/></script>
-        -->
 		
 	    <!-- Get the user locale from the page context (it was set by Spring MVC's locale resolver) -->
 	    <c:set var="userLocale">

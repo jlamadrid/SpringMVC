@@ -4,8 +4,6 @@
      xmlns:spring="http://www.springframework.org/tags"
      xmlns:form="http://www.springframework.org/tags/form"
      version="2.0">
-    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
-    <jsp:output omit-xml-declaration="yes"/>
 
     <spring:message code="label_contact_new" var="labelContactNew"/>
     <spring:message code="label_contact_update" var="labelContactUpdate"/>
@@ -24,6 +22,7 @@
     <script type="text/javascript">
 
     $(function(){
+
         //decorated using jQuery UI's datepicker() function
         $('#birthDate').datepicker({ 
             dateFormat: 'yy-mm-dd',

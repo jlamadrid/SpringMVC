@@ -15,9 +15,7 @@
     <spring:url value="/customers" var="customersUrl"/>
 
     <h3>${menuHeaderText}</h3>
-    <a href="${addContactUrl}">${menuAddContact}</a>
-
-    <h3>Customers</h3>
-    <a href="${customersUrl}">List</a>
+    <a href="${addContactUrl}">${menuAddContact}</a><br/>
+    <a href="${customersUrl}">List Customers</a>
 
 </div>

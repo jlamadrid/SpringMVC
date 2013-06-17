@@ -12,7 +12,7 @@
     <spring:message code="label_contact_last_name" var="labelContactLastName"/>
     <spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
 
-    <h1>${labelContactList}</h1>
+    <h4>${labelContactList}</h4>
 
     <spring:url value="/contacts/" var="showContactUrl"/>
 
@@ -45,7 +45,7 @@
                 viewrecords: true,
                 gridview: true,
                 height: 250,
-                width: 300,
+                width: 500,
                 caption: '${labelContactList}',
                 onSelectRow: function(id){
                     document.location.href ="${showContactUrl}" + id;
