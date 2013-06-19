@@ -11,14 +11,21 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+/**
+ * Added @JsonIgnoreProperties so that rest clients do not try to include
+ * non properties, e.g. getBirthDateString.
+ * Run Rest Client w/o this annotation to create error.
+ */
 @Entity
 @Table(name = "contact")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Contact implements Serializable {
 
     private Long id;

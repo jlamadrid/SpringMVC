@@ -35,7 +35,41 @@
                 toolbar : 'Basic',
                 uiColor : '#CCCCCC'
             }              
-        );     
+        );
+
+        $('#contactUpdateForm').submit(function(evt){
+            evt.preventDefault();
+
+            formData = $('#contactUpdateForm').serialize();
+
+            $.ajax({
+                url: '/api/contacts',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+
+                    console.log("Status: " + response.status);
+
+                    if(response.status == "SUCCESS"){
+                        $('#info').html("User has been added successfully. ");
+                        $('#error').hide('slow');
+                        $('#info').show('slow');
+
+                    }else{
+
+                        $('#error').html("Please correct following errors: ");
+                        $('#info').hide('slow');
+                        $('#error').show('slow');
+                    }
+                },
+                error: function(e){
+
+                    $('#error').html("Error: " + e.toString());
+                    console.log("Error: " + e);
+                }
+            });
+        });
+
     });
     </script>
 
@@ -108,7 +142,8 @@
                 <input name="file" type="file"/>
             </div>
         </div>
-        
+
+        <form:hidden path="id" />
         <form:hidden path="version" />
 
         <!-- new button styles -->
@@ -116,5 +151,8 @@
         <button class="btn btn-mini" type="reset">Reset</button>
 
     </form:form>
+
+    <div id="info">.</div>
+    <div id="error">.</div>
 
 </div>
