@@ -13,9 +13,11 @@
 
 	<spring:url value="/contacts?form" var="addContactUrl"/>
     <spring:url value="/customers" var="customersUrl"/>
+    <spring:url value="/contacts" var="contactsUrl"/>
 
     <h3>${menuHeaderText}</h3>
     <a href="${addContactUrl}">${menuAddContact}</a><br/>
-    <a href="${customersUrl}">List Customers</a>
+    <a href="${customersUrl}">List Customers</a> <br/>
+    <a href="${contactsUrl}">List Contacts</a>
 
 </div>

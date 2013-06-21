@@ -7,18 +7,21 @@
 	
 	<spring:message code="header_text" var="headerText"/>
 
+    <spring:url value="/" var="homeUrl"/>
+    <spring:message code="home_text" var="homeText"/>
+
     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
     </button>
-    <a class="brand" href="#">${headerText}</a>
+    <a class="brand" href="${homeUrl}">${headerText}</a>
     <div class="nav-collapse collapse">
         <p class="navbar-text pull-right">
             Logged in as <a href="#" class="navbar-link">Username</a>
         </p>
         <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="${homeUrl}">${homeText}</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
