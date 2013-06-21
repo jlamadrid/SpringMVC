@@ -7,7 +7,7 @@
         <h2>Welcome to Spring MVC</h2>
         <p class="lead">
             Spring MVC is an application created to highlight the Spring Frameworks concepts and best practices.
-            <br/>Some of the applications highlights and goals are below.
+            <br/>Some of the applications highlights are below.
         </p>
     </div>
 
@@ -15,25 +15,37 @@
 
         <div class="span6">
 
-            <h4>Spring MVC setup and configuration</h4>
-            <p>Using annotations to define framework components.</p>
+            <h4>Spring MVC</h4>
+            <p>
+                Using Spring MVC, for building web applications grounded on best practices.
+            </p>
 
-            <h4>Twitter Bootstrap Integration</h4>
-            <p>Using Twitter Bootstrap for look and feel.</p>
+            <h4>Spring Data</h4>
+            <p>Using Spring Data project to simplify ORM implementation.</p>
 
-            <h4>JSON Feeding Data Table</h4>
-            <p>Allows for more responsive table navigation. Demonstrates controller returning JSON.</p>
+            <h4>Spring REST Support</h4>
+            <p>
+                Spring MVC provides first-class support for REST services.
+                [root_url]/api/contacts to see a JSON response listing all contacts.
+            </p>
+
         </div>
 
         <div class="span6">
             <h4>Tiles</h4>
-            <p>Using tiles for layout structure and ui reuse.</p>
+            <p>Using tiles for layout structure and UI reuse.</p>
 
             <h4>Internationalization</h4>
-            <p>Applying spring Framework features for i18n.</p>
+            <p>Spring MVC makes it easy to add support for multiple languages.</p>
 
-            <h4>Spring Data</h4>
-            <p>Using Spring Data project to simplify ORM requirements.</p>
+            <h4>Twitter Bootstrap</h4>
+            <p>Twitter Bootstrap for UI design.</p>
+
+            <h4>In Place editing with x-editable</h4>
+            <p>
+                Integrate Spring MVC with x-editable to provide inline editing of entities, i.e. no
+                page turn or refresh.
+            </p>
         </div>
     </div>
 
