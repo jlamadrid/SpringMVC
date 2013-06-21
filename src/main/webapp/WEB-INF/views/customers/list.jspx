@@ -7,6 +7,15 @@
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
+    <script type="text/javascript">
+
+        $.fn.editable.defaults.mode = 'inline';
+
+        $(function(){
+            $('.lastname').editable();
+        });
+    </script>
+
     <h1>Customers</h1>
 
     <c:if test="${not empty customers}">
@@ -21,7 +30,14 @@
             <c:forEach items="${customers}" var="customer">
                 <tr>
                     <td>${customer.firstName}</td>
-                    <td>${customer.lastName}</td>
+                    <td>
+                        <a href="#"
+                           class="lastname"
+                           id="lastname"
+                           data-type="text"
+                           data-pk="${customer.id}"
+                           data-url="/api/inline/customer/${customer.id}">${customer.lastName}</a>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

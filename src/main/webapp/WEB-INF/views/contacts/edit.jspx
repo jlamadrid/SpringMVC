@@ -23,9 +23,13 @@
 
     $(function(){
 
+        $.fn.editable.defaults.mode = 'inline';
+        //$.fn.editable.defaults.ajaxOptions = {type: "put"}
+
         //decorated using jQuery UI's datepicker() function
         $('#birthDate').datepicker({ 
             dateFormat: 'yy-mm-dd',
+            format: 'yyyy-mm-dd',  //
             changeYear: true
         });
 
@@ -37,38 +41,20 @@
             }              
         );
 
-        $('#contactUpdateForm').submit(function(evt){
-            evt.preventDefault();
-
-            formData = $('#contactUpdateForm').serialize();
-
-            $.ajax({
-                url: '/api/contacts',
-                type: 'POST',
-                data: formData,
-                success: function(response) {
-
-                    console.log("Status: " + response.status);
-
-                    if(response.status == "SUCCESS"){
-                        $('#info').html("User has been added successfully. ");
-                        $('#error').hide('slow');
-                        $('#info').show('slow');
-
-                    }else{
-
-                        $('#error').html("Please correct following errors: ");
-                        $('#info').hide('slow');
-                        $('#error').show('slow');
-                    }
-                },
-                error: function(e){
-
-                    $('#error').html("Error: " + e.toString());
-                    console.log("Error: " + e);
-                }
-            });
+        /** Example using inline editing
+        $('#lastname').editable({
+            type: 'text',
+            url: "/api/inline/contact/${contact.id}",
+            pk: "${contact.id}",
+            title: 'Enter lastname',
+            success: function(data, config) {
+                console.log("success");
+            },
+            error: function(errors) {
+                console.log("error: " + errors.toString());
+            }
         });
+       **/
 
     });
     </script>
@@ -103,6 +89,16 @@
                 ${labelContactLastName}*
             </form:label>
             <div class="controls">
+                <!--
+                Example for inline editing
+                <a href="#"
+                   id="lastname"
+                   data-type="text"
+                   data-pk="${contact.id}"
+                   data-url="/inline/edit/id/${contact.id}">${contact.lastName}</a>
+
+                <a href="#" id="lastname">${contact.lastName}</a>
+                -->
                 <form:input path="lastName" />
             </div>
             <div>
@@ -151,8 +147,4 @@
         <button class="btn btn-mini" type="reset">Reset</button>
 
     </form:form>
-
-    <div id="info">.</div>
-    <div id="error">.</div>
-
 </div>

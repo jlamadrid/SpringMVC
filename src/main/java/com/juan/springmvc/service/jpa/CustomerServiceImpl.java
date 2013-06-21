@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer findById(Long id) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return customerRepository.findOne(id);
     }
 
     @Override

@@ -58,6 +58,15 @@
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
 
+        <!-- Bootstrap editable
+        http://vitalets.github.io/x-editable/index.html
+        -->
+        <spring:url value="/resources/scripts/bootstrap-editable.js" var="bootstrap_editable_js" />
+        <spring:url value="/resources/styles/bootstrap-editable.css" var="bootstrap_editable_css" />
+
+        <script src="${bootstrap_editable_js}" type="text/javascript"><jsp:text/></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_editable_css}" />
+
         <style type="text/css">
             body {
                 padding-top: 60px;
