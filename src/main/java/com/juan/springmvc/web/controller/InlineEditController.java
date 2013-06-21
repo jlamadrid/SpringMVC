@@ -30,13 +30,18 @@ public class InlineEditController {
     @Autowired
     private CustomerService customerService;
 
-    @RequestMapping(value = "/contact/{id}", method = RequestMethod.POST)
+    @Autowired
+    private ConversionService conversionService;
+
+     @RequestMapping(value = "/contact/{id}", method = RequestMethod.POST)
      @ResponseBody
      public String postContactEdit(@ModelAttribute XEditableForm form,
                                   @PathVariable("id") Long id) throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
         Contact contact = contactService.findById(id);
-        contact.setLastName(form.getValue());
+
+        setProperty(contact, form);
+
         contactService.save(contact);
         return "";
     }
@@ -47,8 +52,29 @@ public class InlineEditController {
                                  @PathVariable("id") Long id) throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
         Customer customer = customerService.findById(id);
-        customer.setLastName(form.getValue());
+        setProperty(customer, form);
+
         customerService.save(customer);
+
         return "";
+    }
+
+    /**
+     * Utility method that uses Spring's conversion service
+     * @param bean
+     * @param form
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     * @throws NoSuchMethodException
+     */
+    private void setProperty(Object bean, XEditableForm form)
+            throws ClassNotFoundException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
+        Object convertedValue = conversionService.convert(form.getValue(),
+                PropertyUtils.getPropertyType(bean, form.getName()));
+
+        PropertyUtils.setSimpleProperty(bean, form.getName(), convertedValue);
+
     }
 }

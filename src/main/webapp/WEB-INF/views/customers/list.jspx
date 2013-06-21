@@ -29,11 +29,18 @@
             <tbody>
             <c:forEach items="${customers}" var="customer">
                 <tr>
-                    <td>${customer.firstName}</td>
                     <td>
                         <a href="#"
                            class="lastname"
-                           id="lastname"
+                           id="firstName"
+                           data-type="text"
+                           data-pk="${customer.id}"
+                           data-url="/api/inline/customer/${customer.id}">${customer.firstName}</a>
+                    </td>
+                    <td>
+                        <a href="#"
+                           class="lastname"
+                           id="lastName"
                            data-type="text"
                            data-pk="${customer.id}"
                            data-url="/api/inline/customer/${customer.id}">${customer.lastName}</a>
