@@ -35,11 +35,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void deleteById(Long id) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        customerRepository.delete(id);
     }
 
     @Override
-    public Customer save(Customer contact) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
+    }
+
+    @Override
+    public List<Customer> findByLastName(String lastName) {
+        return customerRepository.findByLastName(lastName);
     }
 }

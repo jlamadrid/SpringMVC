@@ -17,4 +17,6 @@ public interface CustomerService {
     public void deleteById(Long id);
 
     public Customer save(Customer contact);
+
+    List<Customer> findByLastName(String lastName);
 }
