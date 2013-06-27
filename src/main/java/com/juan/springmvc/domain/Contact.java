@@ -26,28 +26,13 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "contact")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Contact implements Serializable {
+public class Contact extends AbstractEntity implements Serializable {
 
-    private Long id;
-    private int version;
     private String firstName;
     private String lastName;
     private DateTime birthDate;
     private String description;
     private byte[] photo;
-
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "ID")
-    public Long getId() {
-        return id;
-    }
-
-    @Version
-    @Column(name = "VERSION")
-    public int getVersion() {
-        return version;
-    }
 
     /**
      * For the validation message, we use a code by using the curly braces. This will cause the
@@ -110,17 +95,9 @@ public class Contact implements Serializable {
     }
 
     public String toString() {
-        return "Contact - Id: " + id + ", First name: " + firstName
+        return "Contact - Id: " + getId() + ", First name: " + firstName
                 + ", Last name: " + lastName + ", Birthday: " + birthDate
                 + ", Description: " + description;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setVersion(int version) {
-        this.version = version;
     }
 
     public void setFirstName(String firstName) {
