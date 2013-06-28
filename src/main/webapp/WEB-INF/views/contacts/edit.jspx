@@ -41,20 +41,25 @@
             }              
         );
 
-        /** Example using inline editing
-        $('#lastname').editable({
-            type: 'text',
-            url: "/api/inline/contact/${contact.id}",
-            pk: "${contact.id}",
-            title: 'Enter lastname',
-            success: function(data, config) {
-                console.log("success");
-            },
-            error: function(errors) {
-                console.log("error: " + errors.toString());
-            }
+        $('#contactUpdateForm').submit(function(evt){
+            evt.preventDefault();  //make sure we dont submit
+            var firstName = $('#firstName').val();
+            var lastName = $('#lastName').val();
+            var id = $('#id').val();
+            var json = { "firstName" : firstName, "lastName" : lastName, "id" : id};
+            $.ajax({
+                url: $('/contacts/{contact.id}').action,
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify(json),
+                success: function(data) {
+                    console.log(data);
+                    alert("Updated! See console log for data");
+                    var content = '';
+                }
+            });
         });
-       **/
 
     });
     </script>

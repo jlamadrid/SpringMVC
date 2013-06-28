@@ -13,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -86,36 +87,18 @@ public class ContactController {
      * immediately.
      *
      * @param contact
-     * @param bindingResult
-     * @param uiModel
-     * @param httpServletRequest
-     * @param redirectAttributes
-     * @param locale
      * @return
      */
-    @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.POST)
-    public String update(@Valid Contact contact, BindingResult bindingResult, Model uiModel,
-                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE )
+    public @ResponseBody Contact update(@RequestBody Contact contact) {
 
         logger.info("Updating contact");
 
-        if (bindingResult.hasErrors()) {
-
-            uiModel.addAttribute("message",
-                    new Message("error", messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
-
-            uiModel.addAttribute("contact", contact);
-            return "contacts/update";
-        }
-
-        uiModel.asMap().clear();
-
-        redirectAttributes.addFlashAttribute("message", new Message("success",
-                messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
-
         contactService.save(contact);
 
-        return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(), httpServletRequest);
+        return contact;
     }
 
     @RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)
@@ -125,39 +108,18 @@ public class ContactController {
     }
 
     /**
-     * Note the use of @Valid to enable JSR-303 validations as defined in the entity class.
-     * We also want the JSR-303 validation message to use the same ResourceBundle as for the views. To do this,
-     * we need to configure the validator in the DispatcherServlet configuration (servlet-context.xml)
      *
      * @param contact
-     * @param bindingResult
-     * @param uiModel
-     * @param httpServletRequest
-     * @param redirectAttributes
-     * @param locale
      * @return
      */
-    @RequestMapping(params = "form", method = RequestMethod.POST)
-    public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel,
-                         HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
+    public @ResponseBody Contact create(@RequestBody Contact contact) {
 
         logger.info("Creating contact");
-        if (bindingResult.hasErrors()) {
-            uiModel.addAttribute("message", new Message("error",
-                    messageSource.getMessage("contact_save_fail", new Object[]{}, locale)));
-            uiModel.addAttribute("contact", contact);
-            return "contacts/create";
-        }
-
-        uiModel.asMap().clear();
-        redirectAttributes.addFlashAttribute("message", new Message("success",
-                messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
-
-        logger.info("Contact id: " + contact.getId());
 
         contactService.save(contact);
-        return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(),
-                httpServletRequest);
+
+        return contact;
     }
 
     /**
