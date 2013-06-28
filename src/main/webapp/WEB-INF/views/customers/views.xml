@@ -10,6 +10,7 @@
     -->
     <definition extends="default" name="customers/list">
         <put-attribute name="body" value="/WEB-INF/views/customers/list.jspx" />
+        <put-attribute name="joyride" value="/WEB-INF/views/customers/joyride.jspx" />
     </definition>
 
 </tiles-definitions>

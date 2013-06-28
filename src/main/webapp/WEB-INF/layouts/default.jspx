@@ -67,6 +67,17 @@
         <script src="${bootstrap_editable_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_editable_css}" />
 
+
+        <!-- jquery-joyride
+        http://zurb.com/playground/jquery-joyride-feature-tour-plugin
+        -->
+        <spring:url value="/resources/scripts/jquery.joyride-2.1.js" var="jquery_joyride_js" />
+        <spring:url value="/resources/styles/joyride-2.1.css" var="joyride_css" />
+
+        <script src="${jquery_joyride_js}" type="text/javascript"><jsp:text/></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${joyride_css}" />
+
+
         <style type="text/css">
             body {
                 padding-top: 60px;
@@ -131,9 +142,10 @@
 
         </div>
 
-
         <footer>
             <tiles:insertAttribute name="footer" ignore="true"/>
         </footer>
+
+        <tiles:insertAttribute name="joyride" ignore="true"/>
 	</body>
 </html>
