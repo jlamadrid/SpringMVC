@@ -6,7 +6,10 @@
     <div class="jumbotron">
         <h2>Welcome to Spring MVC</h2>
         <p class="lead">
-            Spring MVC is an application created to highlight the Spring Frameworks concepts and best practices.
+            Spring MVC is a reference application used to learn and demonstrate Spring Framework and Spring MVC concepts. 
+            Additionally, to learn and reinforce web application architecture methods and best practices, e.g. 
+            separation of concerns, layered architecture, MVC, etc.
+            
             <br/>Some of the applications highlights are below.
         </p>
     </div>
@@ -15,36 +18,46 @@
 
         <div class="span6">
 
-            <h4>Spring MVC</h4>
+            <h5>Spring MVC</h5>
             <p>
                 Using Spring MVC, for building web applications grounded on best practices.
             </p>
 
-            <h4>Spring Data</h4>
-            <p>Using Spring Data project to simplify ORM implementation.</p>
+            <h5>Spring Data</h5>
+            <p>Using Spring Data and repository abstraction to simplify ORM implementation.</p>
 
-            <h4>Spring REST Support</h4>
+            <h5>Spring REST</h5>
             <p>
                 Spring MVC provides first-class support for REST services.
                 [root_url]/api/contacts to see a JSON response listing all contacts.
             </p>
 
+            <h5>jQuery AJAX</h5>
+            <p>
+                Form submission without page refresh using jQuery and AJAX
+            </p>
+
         </div>
 
         <div class="span6">
-            <h4>Tiles</h4>
+            <h5>Tiles</h5>
             <p>Using tiles for layout structure and UI reuse.</p>
 
-            <h4>Internationalization</h4>
+            <h5>Internationalization</h5>
             <p>Spring MVC makes it easy to add support for multiple languages.</p>
 
-            <h4>Twitter Bootstrap</h4>
+            <h5>Twitter Bootstrap</h5>
             <p>Twitter Bootstrap for UI design.</p>
 
-            <h4>In Place editing with x-editable</h4>
+            <h5>In Place editing with x-editable</h5>
             <p>
                 Integrate Spring MVC with x-editable to provide inline editing of entities, i.e. no
                 page turn or refresh.
+            </p>
+
+            <h5>Joyride</h5>
+            <p>
+                Integrate Joyride plugin to facilitate feature tour.
             </p>
         </div>
     </div>
