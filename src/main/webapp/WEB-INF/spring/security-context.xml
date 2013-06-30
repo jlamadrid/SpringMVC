@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!-- To avoid the following error
+    http://stackoverflow.com/questions/5481879/error-using-spring-authorize-tag-to-check-to-see-if-user-is-logged-in
+    -->
+    <bean class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+
+    <!--
+    To avoid redirect to favicon.ico after authenticating.
+    -->
+    <security:http pattern="/favicon.ico" security="none" />
+
+    <security:http auto-config="true">
+        <security:intercept-url pattern="/customers" access="ROLE_ADMIN" />
+    </security:http>
+
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user authorities="ROLE_ADMIN" name="admin" password="admin" />
+                <security:user authorities="ROLE_USER" name="user" password="user" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+</beans>
