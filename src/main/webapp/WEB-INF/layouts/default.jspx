@@ -77,6 +77,12 @@
         <script src="${jquery_joyride_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${joyride_css}" />
 
+        <!-- jquery-form
+        http://malsup.com/jquery/form/
+        -->
+        <spring:url value="/resources/scripts/jquery.form.js" var="jquery_form_js" />
+        <script src="${jquery_form_js}" type="text/javascript"><jsp:text/></script>
+
 
         <style type="text/css">
             body {
