@@ -8,6 +8,8 @@
 	<spring:message code="header_text" var="headerText"/>
 
     <spring:url value="/" var="homeUrl"/>
+    <spring:url value="/j_spring_security_logout" htmlEscape="true" var="logout" />
+
     <spring:message code="home_text" var="homeText"/>
 
     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -18,7 +20,10 @@
     <a class="brand" href="${homeUrl}">${headerText}</a>
     <div class="nav-collapse collapse">
         <p class="navbar-text pull-right">
-            Logged in as <a href="#" class="navbar-link">Username</a>
+            <sec:authorize access="isAuthenticated()">
+                <sec:authentication property="principal.username" />
+                (<a href="${logout}">Logout</a>)
+            </sec:authorize>
         </p>
         <ul class="nav">
             <li class="active"><a href="${homeUrl}">${homeText}</a></li>

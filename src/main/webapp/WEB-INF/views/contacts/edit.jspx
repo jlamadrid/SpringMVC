@@ -41,42 +41,93 @@
             }              
         );
 
-        $('#contactUpdateForm').submit(function(evt){
-            evt.preventDefault();  //make sure we dont submit
-            var firstName = $('#firstName').val();
-            var lastName = $('#lastName').val();
-            var id = $('#id').val();
-            var json = { "firstName" : firstName, "lastName" : lastName, "id" : id};
-            $.ajax({
-                url: $('/contacts/{contact.id}').action,
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify(json),
-                success: function(data) {
-                    console.log(data);
-                    alert("Updated! See console log for data");
-                    var content = '';
-                }
-            });
+        var options = {
+            target:        '#output',   // target element(s) to be updated with server response
+            beforeSubmit:  showRequest,  // pre-submit callback
+            success:       showResponse,  // post-submit callback
+
+            beforeSerialize: function($form, options) {
+                // return false to cancel submit
+            },
+
+            // other available options:
+            //url: override for form's 'action' attribute
+            url:  "/contacts/${contact.id}",
+            //type: 'get' or 'post', override for form's 'method' attribute
+            type: 'post',
+            //dataType: 'xml', 'script', or 'json' (expected server response type)
+            dataType: 'json',
+            clearForm: true,        // clear all form fields after successful submit
+            resetForm: true         // reset the form after successful submit
+
+            // $.ajax options can be used here too, for example:
+            //timeout:   3000
+            //contentType: 'application/json'
+        };
+
+
+        // bind to the form's submit event
+        $('#contactUpdateForm').submit(function() {
+            // inside event callbacks 'this' is the DOM element so we first
+            // wrap it in a jQuery object and then invoke ajaxSubmit
+            $(this).ajaxSubmit(options);
+
+            // !!! Important !!!
+            // always return false to prevent standard browser submit and page navigation
+            return false;
         });
+
+        // pre-submit callback
+        function showRequest(formData, jqForm, options) {
+
+            // formData is an array; here we use $.param to convert it to a string to display it
+            // but the form plugin does this for you automatically when it submits the data
+            var queryString = $.param(formData);
+
+            // jqForm is a jQuery object encapsulating the form element.  To access the
+            // DOM element for the form do this:
+            // var formElement = jqForm[0];
+
+            console.log('About to submit: \n\n' + queryString);
+
+            // here we could return false to prevent the form from being submitted;
+            // returning anything other than false will allow the form submit to continue
+            return true;
+        }
+
+        // post-submit callback
+        function showResponse(responseText, statusText, xhr, $form)  {
+            // for normal html responses, the first argument to the success callback
+            // is the XMLHttpRequest object's responseText property
+
+            // if the ajaxSubmit method was passed an Options Object with the dataType
+            // property set to 'xml' then the first argument to the success callback
+            // is the XMLHttpRequest object's responseXML property
+
+            // if the ajaxSubmit method was passed an Options Object with the dataType
+            // property set to 'json' then the first argument to the success callback
+            // is the json data object returned by the server
+
+            console.log('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+                    '\n\nThe output div should have already been updated with the responseText.');
+        }
 
     });
     </script>
 
     <h4 id="joy_ride_1">${formTitle}</h4>
 
+    <div id="output">Out</div>
+
     <form:form
             modelAttribute="contact"
             id="contactUpdateForm"
             method="post"
-            enctype="multipart/form-data"
             cssClass="form-horizontal">
 
         <c:if test="${not empty message}">
             <div id="message" class="${message.type}">${message.message}</div>
         </c:if>
-
         <div class="control-group" id="numero2">
             <form:label path="firstName" cssClass="control-label">
                 ${labelContactFirstName}*
@@ -132,15 +183,6 @@
             </div>
             <div>
                 <form:errors path="description" cssClass="error" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label for="file">
-                ${labelContactPhoto}
-            </label>
-            <div class="controls">
-                <input name="file" type="file"/>
             </div>
         </div>
 

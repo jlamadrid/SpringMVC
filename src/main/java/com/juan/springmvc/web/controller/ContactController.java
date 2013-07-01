@@ -92,7 +92,7 @@ public class ContactController {
     @RequestMapping(value = "/{id}",
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE )
-    public @ResponseBody Contact update(@RequestBody Contact contact) {
+    public @ResponseBody Contact update(Contact contact) {
 
         logger.info("Updating contact");
 
@@ -112,8 +112,8 @@ public class ContactController {
      * @param contact
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE )
-    public @ResponseBody Contact create(@RequestBody Contact contact) {
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody Contact create(Contact contact) {
 
         logger.info("Creating contact");
 
