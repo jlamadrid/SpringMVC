@@ -21,7 +21,26 @@
     <security:http pattern="/favicon.ico" security="none" />
 
     <security:http auto-config="true">
+
         <security:intercept-url pattern="/customers" access="ROLE_ADMIN" />
+
+        <!-- custom login form
+        see AuthenticationController
+        login-page                 : controller handler will redirect to login page.
+        default-target-url         : default handler for success
+        authentication-failure-url : default handler for failure
+        -->
+        <security:form-login
+                login-page="/login"
+                default-target-url="/contacts"
+                authentication-failure-url="/loginfailed"
+        />
+
+        <!--
+           redirect on logout to home page (HomeController)
+        -->
+        <security:logout logout-success-url="/" />
+
     </security:http>
 
     <!--  In memory
