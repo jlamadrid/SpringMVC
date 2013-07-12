@@ -12,6 +12,7 @@
 	<head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
         <!--
         Add jQuery and jQuery UI
@@ -29,6 +30,10 @@
         <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
         <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
         <spring:url value="/resources/styles/bootstrap-responsive.min.css" var="bootstrap_responsive_css" />
+
+        <!-- Bootstrap - AppStrap-->
+        <spring:url value="/resources/styles/theme-style.css" var="appstrap_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${appstrap_theme_css}" />
 
         <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
@@ -49,30 +54,6 @@
             .container-narrow > hr {
                 margin: 30px 0;
             }
-
-            .jumbotron {
-                margin: 60px 0;
-                text-align: center;
-            }
-
-            .jumbotron h1 {
-                font-size: 72px;
-                line-height: 1;
-            }
-
-            .jumbotron .btn {
-                font-size: 21px;
-                padding: 14px 24px;
-            }
-
-            /* Supporting marketing content */
-            .marketing {
-                margin: 60px 0;
-            }
-
-            .marketing p + h4 {
-                margin-top: 28px;
-            }
         </style>
 
 
@@ -91,6 +72,8 @@
 		<title><spring:message code="welcome_h3" arguments="${app_name}" /></title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300|Rambla|Calligraffitti' rel='stylesheet' type='text/css'/>
 
 	</head>
 	

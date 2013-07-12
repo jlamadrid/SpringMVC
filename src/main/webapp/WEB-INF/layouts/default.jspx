@@ -58,6 +58,10 @@
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
 
+        <!-- Bootstrap - AppStrap-->
+        <spring:url value="/resources/styles/theme-style.css" var="appstrap_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${appstrap_theme_css}" />
+
         <!-- Bootstrap editable
         http://vitalets.github.io/x-editable/index.html
         -->
@@ -66,6 +70,12 @@
 
         <script src="${bootstrap_editable_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_editable_css}" />
+
+        <!-- Bootstrap dropdown
+        NOT SURE WHY, BUT ADDING THIS DISABLES LOGIN DROP DOWN IN HEADER BAR - GO FIGURE
+        <spring:url value="/resources/scripts/bootstrap-dropdown.js" var="bootstrap_dropdown_js" />
+        <script src="${bootstrap_dropdown_js}" type="text/javascript"><jsp:text/></script>
+        -->
 
 
         <!-- jquery-joyride
@@ -92,15 +102,6 @@
             .sidebar-nav {
                 padding: 9px 0;
             }
-
-            @media (max-width: 980px) {
-                /* Enable use of floated navbar text */
-                .navbar-text.pull-right {
-                    float: none;
-                    padding-left: 5px;
-                    padding-right: 5px;
-                }
-            }
         </style>
 
 
@@ -124,13 +125,7 @@
 	
   	<body >
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <tiles:insertAttribute name="header" ignore="true" />
-                </div>
-            </div>
-        </div>
+        <tiles:insertAttribute name="header" ignore="true" />
 
    		<div class="container-fluid">
 

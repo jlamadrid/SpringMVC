@@ -4,40 +4,28 @@
      version="2.0">
     <jsp:output omit-xml-declaration="yes"/>
 
-    <div class="row-fluid marketing">
+    <form name='f' action="j_spring_security_check" method='POST'
+          class="form-login form-wrapper form-narrow">
 
-        <div class="span12">
+        <h3 class="title-divider"><span>Login</span>
+            <small>Not signed up? <a href="pricing.htm">Sign up here</a>.</small>
+        </h3>
 
-            <h3>Login with Username and Password (Custom Page)</h3>
 
-            <c:if test="${not empty error}">
-                <div class="errorblock">
-                    Your login attempt was not successful, try again.<br /> Caused :
-                    ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
-                </div>
-            </c:if>
+        <c:if test="${not empty error}">
+            <div class="errorblock">
+                Your login attempt was not successful. <br/> Reason :
+                ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+            </div>
+        </c:if>
 
-            <form name='f' action="j_spring_security_check" method='POST'>
+        <input type="text" class="input-block-level" placeholder="User Name" name='j_username' value=''/>
+        <input type="password" class="input-block-level" placeholder="Password" name='j_password'/>
+        <label class="checkbox">
+            <input type="checkbox" value="remember-me"/> Remember me
+        </label>
+        <button class="btn btn-primary" type="submit">Sign in</button>
+        | <a href="#">Forgotten Password?</a>
+    </form>
 
-                <table>
-                    <tr>
-                        <td>User:</td>
-                        <td><input type='text' name='j_username' value=''/></td>
-                    </tr>
-                    <tr>
-                        <td>Password:</td>
-                        <td><input type='password' name='j_password' /></td>
-                    </tr>
-                    <tr>
-                        <td colspan='2'><input name="submit" type="submit" value="submit" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan='2'><input name="reset" type="reset" /></td>
-                    </tr>
-                </table>
-
-            </form>
-
-        </div>
-    </div>
 </div>

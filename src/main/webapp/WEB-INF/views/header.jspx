@@ -1,35 +1,56 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
-	xmlns:spring="http://www.springframework.org/tags" 
-	xmlns:sec="http://www.springframework.org/security/tags" 
-	version="2.0">
-	<jsp:directive.page contentType="text/html;charset=UTF-8" />
-	<jsp:output omit-xml-declaration="yes" />
-	
-	<spring:message code="header_text" var="headerText"/>
+     xmlns:spring="http://www.springframework.org/tags"
+     xmlns:sec="http://www.springframework.org/security/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <spring:message code="header_text" var="headerText"/>
 
     <spring:url value="/" var="homeUrl"/>
-    <spring:url value="/j_spring_security_logout" htmlEscape="true" var="logout" />
+    <spring:url value="/j_spring_security_logout" htmlEscape="true" var="logout"/>
 
     <spring:message code="home_text" var="homeText"/>
 
-    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-    </button>
-    <a class="brand" href="${homeUrl}">${headerText}</a>
-    <div class="nav-collapse collapse">
-        <p class="navbar-text pull-right">
-            <sec:authorize access="isAuthenticated()">
-                <sec:authentication property="principal.username" />
-                (<a href="${logout}">Logout</a>)
-            </sec:authorize>
-        </p>
-        <ul class="nav">
-            <li class="active"><a href="${homeUrl}">${homeText}</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </div><!--/.nav-collapse -->
+    <div id="navigation" class="wrapper">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+
+            <div class="navbar-inner">
+                <!--user menu-->
+                <sec:authorize access="isAnonymous()">
+                    <ul class="nav user-menu pull-right">
+                        <li><a href="signup.htm" class="signup">Sign Up</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle login" id="login-drop" data-toggle="dropdown">Login</a>
+
+                            <div class="dropdown-menu" role="menu" aria-labelledby="login-drop">
+                                <form name='f' action="j_spring_security_check" method='POST' class="form-inline"
+                                      id="login-form-drop" role="menuitem">
+                                    <div class="input-append">
+                                        <input type="text" class="input-small email" placeholder="Username"
+                                               name='j_username' value=''/>
+                                        <input type="password" class="input-small password" placeholder="Password"
+                                               name='j_password'/>
+                                        <input type="submit" class="btn btn-primary login" value="Login"/>
+                                    </div>
+                                </form>
+
+                                <span class="divider" role="menuitem"></span>
+                                <small role="menuitem">Not a member? <a href="#" class="signup">Sign up now!</a></small>
+                                <small role="menuitem"><a href="#">Forgotten password?</a></small>
+                            </div>
+                        </li>
+                    </ul>
+                </sec:authorize>
+
+                <p class="navbar-text pull-right">
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal.username"/>
+                        (<a href="${logout}">Logout</a>)
+                    </sec:authorize>
+                </p>
+            </div>
+        </div>
+    </div>
 
 </div>
