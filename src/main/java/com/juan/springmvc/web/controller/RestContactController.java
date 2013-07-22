@@ -1,12 +1,17 @@
 package com.juan.springmvc.web.controller;
 
+import com.google.common.collect.Lists;
 import com.juan.springmvc.domain.Contact;
 import com.juan.springmvc.service.ContactService;
+import com.juan.springmvc.web.form.ContactGrid;
 import com.juan.springmvc.web.json.JsonResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This controller exposes a web services api that handles JSON request/response interaction,
+ * e.g. AJAX Forms, UI Components, Backbone MVC, etc.
+ *
  * Created with IntelliJ IDEA.
  * User: jl25292
  */
@@ -46,7 +54,7 @@ public class RestContactController {
     }
 
     /**
-     * http://localhost:8080/api/contact/12
+     * curl http://localhost:8080/api/contacts/12
      * {"id":12,"version":0,"firstName":"Paul","lastName":"Simon","birthDate":1014872400000,"description":null,"photo":null,"birthDateString":"2002-02-28"}
      */
     @RequestMapping(value = "contacts/{id}", method=RequestMethod.GET)
@@ -70,7 +78,7 @@ public class RestContactController {
      */
     @RequestMapping(value="contacts/{id}", method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateContact(@PathVariable("id") long id, @Valid Contact contact) {
+    public void updateContact(@PathVariable("id") long id, @RequestBody Contact contact) {
         contactService.save(contact);
     }
 
@@ -122,5 +130,61 @@ public class RestContactController {
         }
 
         return jsonResponse;
+    }
+
+
+    /**
+     * Demonstrates using JSON response to feed client side table UI w/ pagination.
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param order
+     * @return
+     */
+    @RequestMapping(value = "/contacts/listgrid", method = RequestMethod.GET, produces="application/json")
+    @ResponseBody
+    public ContactGrid listGrid(@RequestParam(value = "page", required = false) Integer page,
+                                @RequestParam(value = "rows", required = false) Integer rows,
+                                @RequestParam(value = "sidx", required = false) String sortBy,
+                                @RequestParam(value = "sord", required = false) String order) {
+
+        logger.info("Listing contacts for grid with page: {}, rows: {}", page, rows);
+        logger.info("Listing contacts for grid with sort: {}, order: {}", sortBy, order);
+
+        // Process order by
+        Sort sort = null;
+        String orderBy = sortBy;
+        if (orderBy != null && orderBy.equals("birthDateString"))
+            orderBy = "birthDate";
+
+        if (orderBy != null && order != null) {
+            if (order.equals("desc")) {
+                sort = new Sort(Sort.Direction.DESC, orderBy);
+            } else
+                sort = new Sort(Sort.Direction.ASC, orderBy);
+        }
+
+        // Constructs page request for current page
+        // Note: page number for Spring Data JPA starts with 0, while jqGrid starts with 1
+        PageRequest pageRequest = null;
+
+        if (sort != null) {
+            pageRequest = new PageRequest(page - 1, rows, sort);
+        } else {
+            pageRequest = new PageRequest(page - 1, rows);
+        }
+
+        Page<Contact> contactPage = contactService.findAllByPage(pageRequest);
+
+        // Construct the grid data that will return as JSON data
+        ContactGrid contactGrid= new ContactGrid();
+
+        contactGrid.setCurrentPage(contactPage.getNumber() + 1);
+        contactGrid.setTotalPages(contactPage.getTotalPages());
+        contactGrid.setTotalRecords(contactPage.getTotalElements());
+
+        contactGrid.setContactData(Lists.newArrayList(contactPage.iterator()));
+
+        return contactGrid;
     }
 }

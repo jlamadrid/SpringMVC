@@ -14,7 +14,7 @@
 
     <h4>${labelContactList}</h4>
 
-    <spring:url value="/contacts/" var="showContactUrl"/>
+    <spring:url value="/api/contacts" var="showContactUrl"/>
 
     <script type="text/javascript">
         $(function(){
