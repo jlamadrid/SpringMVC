@@ -1,29 +1,16 @@
 package com.juan.springmvc.web.controller;
 
-import com.google.common.collect.Lists;
 import com.juan.springmvc.domain.Contact;
 import com.juan.springmvc.service.ContactService;
-import com.juan.springmvc.web.form.ContactGrid;
-import com.juan.springmvc.web.form.Message;
-import com.juan.springmvc.web.util.UrlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,6 +41,17 @@ public class ContactController {
         logger.info("No. of contacts: " + contacts.size());
 
         return "contacts/list"; //logical view name defined in tiles contacts/views.xml
+    }
+
+    /**
+     * Return user to page with backbone backed UI
+     * @return
+     */
+    @RequestMapping(value = "/backbone-contacts", method = RequestMethod.GET)
+    public String backbone_list() {
+        logger.info("Listing backbone contacts");
+
+        return "contacts/backbone-list"; //logical view name defined in tiles contacts/views.xml
     }
 
     /**

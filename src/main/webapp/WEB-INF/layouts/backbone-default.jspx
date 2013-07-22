@@ -1,0 +1,121 @@
+<html xmlns:jsp="http://java.sun.com/JSP/Page" 
+      xmlns:c="http://java.sun.com/jsp/jstl/core" 
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions" 
+      xmlns:tiles="http://tiles.apache.org/tags-tiles" 
+      xmlns:spring="http://www.springframework.org/tags">  
+
+    <jsp:output doctype-root-element="HTML" doctype-system="about:legacy-compat" />
+    
+    <jsp:directive.page contentType="text/html;charset=UTF-8" />  
+    <jsp:directive.page pageEncoding="UTF-8" /> 
+		
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+
+
+
+        <!--
+        Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
+        tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
+        browser, which will cause undetermined behavior in the page. The addition of the <jsp:text/> ensures
+        that the <script> tag will not render in the page because it avoids unexpected issues.
+        -->
+		
+        <!--
+        Add jQuery and jQuery UI
+        <spring:url> tag is used to define the URLs for the files and store them in variables.
+        -->
+        <spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_js" />
+        <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_js" />
+        <script src="${jquery_js}" type="text/javascript"><jsp:text/></script>
+        <script src="${jquery_ui_js}" type="text/javascript"><jsp:text/></script>
+
+        <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
+
+        <!-- jqGrid for pagination-->
+        <spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css" />
+        <spring:url value="/resources/jqgrid/js/i18n/grid.locale-en.js" var="jqgrid_locale_url" />
+        <spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url" />
+
+        <link rel="stylesheet" type="text/css" media="screen" href="${jqgrid_css}" />
+        <script type="text/javascript" src="${jqgrid_locale_url}"><jsp:text/></script>
+        <script type="text/javascript" src="${jqgrid_url}"><jsp:text/></script>
+
+        <!-- Bootstrap -->
+        <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
+        <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
+        <spring:url value="/resources/styles/bootstrap-responsive.min.css" var="bootstrap_responsive_css" />
+
+        <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
+
+
+        <!-- Backbone & Underscore-->
+        <spring:url value="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js" var="backbone_js" />
+        <spring:url value="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js" var="underscore_js" />
+        <script type="text/javascript" src="${underscore_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${backbone_js}"><jsp:text/></script>
+
+        <!-- http://handlebarsjs.com/ -->
+        <spring:url value="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js" var="handlebars_js" />
+        <script type="text/javascript" src="${handlebars_js}"><jsp:text/></script>
+
+
+        <!-- Bootstrap - AppStrap-->
+        <spring:url value="/resources/styles/theme-style.css" var="appstrap_theme_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${appstrap_theme_css}" />
+
+
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+            .sidebar-nav {
+                padding: 9px 0;
+            }
+        </style>
+
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+		
+	    <!-- Get the user locale from the page context (it was set by Spring MVC's locale resolver) -->
+	    <c:set var="userLocale">
+	        <c:set var="plocale">${pageContext.response.locale}</c:set>
+	        <c:out value="${fn:replace(plocale, '_', '-')}" default="en" />
+	    </c:set>
+	
+		<spring:message code="application_name" var="app_name" htmlEscape="false"/>
+		<title><spring:message code="welcome_h3" arguments="${app_name}" /></title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+	</head>
+	
+  	<body >
+
+        <tiles:insertAttribute name="header" ignore="true" />
+
+   		<div class="container-fluid">
+
+            <div class="row-fluid">
+                <div class="span2">
+                    <div class="well sidebar-nav">
+		                <tiles:insertAttribute name="menu" ignore="true" />
+                    </div><!--/.well -->
+                </div><!--/span-->
+
+                <div class="span9">
+	    		    <tiles:insertAttribute name="body"/>
+                </div>
+		    </div>
+
+        </div>
+	</body>
+</html>

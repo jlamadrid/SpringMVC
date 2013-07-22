@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+     xmlns:c="http://java.sun.com/jsp/jstl/core"
+     xmlns:joda="http://www.joda.org/joda/time/tags"
+     xmlns:spring="http://www.springframework.org/tags"
+     version="2.0">
+    <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+    <jsp:output omit-xml-declaration="yes"/>
+
+    <h4>Contacts</h4>
+
+    <div id="container">
+        <table class="table" id="contacts"></table>
+    </div>
+
+    <script type="text/x-handlebars-template" id="contact-view-template">
+        <td>{{firstName}}</td>
+        <td>{{lastName}}</td>
+        <td>{{birthDate}}</td>
+        <td><button class="btn btn-mini btn-primary" type="button" id="btnEdit">Edit</button></td>
+    </script>
+
+    <script type="text/x-handlebars-template" id="contact-edit-template">
+        <form class="form-edit">
+            <input type="text" class="input-small" name="firstName" placeholder="{{firstName}}"/>
+            <button type="submit" class="btn btn-mini btn-primary" id="btnSubmit">Submit</button>
+            <button type="cancel" class="btn btn-mini" id="btnCancel">Cancel</button>
+        </form>
+    </script>
+
+    <script type="text/javascript">
+
+        var Contact = Backbone.Model.extend({urlRoot: '/api/contacts'});
+
+        var ContactView = Backbone.View.extend({
+
+            tagName: 'tr',
+
+            events: {
+                //sample event fired from button in the view template
+                'click #btnEdit': 'doEdit',
+                'click #btnSubmit': 'doSubmit' ,
+                'click #btnCancel': 'doCancel'
+            },
+
+            //basicTemplate: _.template( $('#contact-view-template').html() ),
+            viewTemplate: Handlebars.compile($("#contact-view-template").html()),
+
+            editTemplate: Handlebars.compile($("#contact-edit-template").html()),
+
+            initialize: function(){
+
+                //would rather re render when successful sync - or possible that we update view on bad sync
+                //this.model.on( "change:all", this.render, this );
+
+                //when model is updated - re render
+                this.model.on( "sync", this.render, this );
+            },
+
+            render: function() {
+                this.$el.html( this.viewTemplate( this.model.toJSON()));
+                return this;
+            },
+
+            doEdit: function() {
+                this.$el.html( this.editTemplate( this.model.toJSON()));
+            },
+
+            doCancel: function() {
+                this.$el.html( this.viewTemplate( this.model.toJSON()));
+            },
+
+            doSubmit: function(e) {
+                e.preventDefault();
+                var value = this.$('input[name=firstName]').val();
+                this.model.save(
+                    {firstName: value},
+                    {
+                        success: function (model, response) {
+                            console.log("success");
+                        },
+                        error: function (model, response) {
+                            console.log("error");
+                        }
+                    }
+                );
+
+                //this.$el.html( this.viewTemplate( this.model.toJSON()));
+            }
+
+        });
+
+        //var contact = new Contact({id:2});
+
+        //wait for contact to be fetched before doing anything on the view.
+        /*
+        contact.on('sync', function(){
+            console.log(JSON.stringify(contact));
+            var contactView = new ContactView({model:contact});
+            contactView.render();
+        });
+        */
+        //contact.fetch();
+
+        var ContactList = Backbone.Collection.extend({
+            model: Contact,
+            url: '/api/contacts'
+        });
+
+        var ContactListView = Backbone.View.extend({
+
+            el:  '#contacts', //default = div
+
+            initialize: function(){
+                this.collection.on('add', this.addOne, this); //re render when adding a model
+                this.collection.on('reset', this.render, this);
+            },
+
+            render: function(){
+                this.collection.forEach(this.addOne, this);
+            },
+
+            addOne: function(model){
+                var contactView = new ContactView({model:model});
+                contactView.render();
+                this.$el.append(contactView.el);
+            }
+
+        });
+
+        var contactList = new ContactList();
+
+        var contactListView = new ContactListView({collection: contactList});
+
+        contactList.fetch();
+
+        //$('#contacts').html(contactListView.render().el);
+
+    </script>
+</div>
