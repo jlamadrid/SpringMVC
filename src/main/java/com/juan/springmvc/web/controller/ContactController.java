@@ -87,10 +87,8 @@ public class ContactController {
      * @param contact
      * @return
      */
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE )
-    public @ResponseBody Contact update(Contact contact) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public Contact update(Contact contact) {
 
         logger.info("Updating contact");
 
@@ -106,12 +104,12 @@ public class ContactController {
     }
 
     /**
-     *
+     * //TODO: test error conditions and add @Valid; BindingResult result parameter and understand how these work
      * @param contact
      * @return
      */
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody Contact create(Contact contact) {
+    @RequestMapping(method = RequestMethod.POST)
+    public Contact create(Contact contact) {
 
         logger.info("Creating contact");
 

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindException;
@@ -27,6 +28,8 @@ import java.util.List;
 /**
  * This controller exposes a web services api that handles JSON request/response interaction,
  * e.g. AJAX Forms, UI Components, Backbone MVC, etc.
+ *
+ * http://static.springsource.org/spring/docs/3.0.0.M3/reference/html/ch18s02.html
  *
  * Created with IntelliJ IDEA.
  * User: jl25292
@@ -69,17 +72,27 @@ public class RestContactController {
      * @RequestMapping annotation here is almost the same as the one used with the showContact() method.
      * The only difference is that the method attribute is set to handle HTTP PUT requests instead of GET requests.
      *
-     * The @ResponseStatus annotation defines the HTTP status that should be set on the response to the client.
-     * In this case, HttpStatus.NO_CONTENT indicates that the response status should be set to the HTTP status
-     * code 204. That status code means that the request was processed successfully, but nothing is returned in
-     * the body of the response.
-     *
      * @param contact
      */
-    @RequestMapping(value="contacts/{id}", method=RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateContact(@PathVariable("id") long id, @RequestBody Contact contact) {
-        contactService.save(contact);
+    @RequestMapping(value="contacts/{id}", method=RequestMethod.PUT )
+    public @ResponseBody JsonResponse updateContact(@PathVariable("id") long id, @Valid Contact contact, BindingResult result) {
+
+        JsonResponse jsonResponse = new JsonResponse();
+        List<Contact> contactList = new ArrayList<Contact>();
+
+        if(!result.hasErrors()){
+            contactService.save(contact);
+
+            jsonResponse.setStatus("SUCCESS");
+            contactList.add(contact);
+            jsonResponse.setResult(contactList);
+
+        } else{
+            jsonResponse.setStatus("FAIL");
+            jsonResponse.setResult(result.getAllErrors());
+        }
+
+        return jsonResponse;
     }
 
     /**
@@ -103,15 +116,12 @@ public class RestContactController {
      *
      * @param contact
      * @param result
-     * @param response
      * @return
      * @throws BindException
      */
     @RequestMapping(value="contacts", method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public @ResponseBody JsonResponse createContact(@Valid Contact contact,
-                                               BindingResult result,
-                                               HttpServletResponse response) {
+    public @ResponseBody JsonResponse createContact(@Valid Contact contact, BindingResult result) {
 
         JsonResponse jsonResponse = new JsonResponse();
         List<Contact> contactList = new ArrayList<Contact>();

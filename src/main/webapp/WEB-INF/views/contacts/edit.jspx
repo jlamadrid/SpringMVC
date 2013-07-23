@@ -18,13 +18,11 @@
        If yes, then it's a new contact; otherwise, it's an update. The corresponding form title will be displayed.
     -->
     <spring:eval expression="contact.id == null ? labelContactNew : labelContactUpdate" var="formTitle"/>
+    <spring:eval expression="contact.id == null ? 'POST' : 'PUT' " var="putPost"/>
 
     <script type="text/javascript">
 
     $(function(){
-
-        $.fn.editable.defaults.mode = 'inline';
-        //$.fn.editable.defaults.ajaxOptions = {type: "put"}
 
         //decorated using jQuery UI's datepicker() function
         $('#birthDate').datepicker({ 
@@ -52,9 +50,9 @@
 
             // other available options:
             //url: override for form's 'action' attribute
-            url:  "/contacts/${contact.id}",
+            url:  "/api/contacts/${contact.id}",
             //type: 'get' or 'post', override for form's 'method' attribute
-            type: 'post',
+            type: "${putPost}",
             //dataType: 'xml', 'script', or 'json' (expected server response type)
             dataType: 'json',
             clearForm: true,        // clear all form fields after successful submit
@@ -88,7 +86,7 @@
             // DOM element for the form do this:
             // var formElement = jqForm[0];
 
-            console.log('About to submit: \n\n' + queryString);
+            console.log('About to submit: ' + queryString);
 
             // here we could return false to prevent the form from being submitted;
             // returning anything other than false will allow the form submit to continue
@@ -108,8 +106,11 @@
             // property set to 'json' then the first argument to the success callback
             // is the json data object returned by the server
 
-            console.log('status: ' + statusText + '\n\nresponseText: \n' + responseText +
-                    '\n\nThe output div should have already been updated with the responseText.');
+            console.log('status: ' + statusText + '\nresponseText: ' + JSON.stringify(responseText) +
+                    '\nThe output div should have already been updated with the responseText.');
+
+            $('#output').append('<b>'+ JSON.stringify(responseText) + '</b>');
+            $('#myModal').modal('show');
         }
 
     });
@@ -117,81 +118,88 @@
 
     <h4 id="joy_ride_1">${formTitle}</h4>
 
-    <div id="output">Out</div>
+    <div class="container">
+        <form:form
+                modelAttribute="contact"
+                id="contactUpdateForm"
+                method="post"
+                cssClass="form-horizontal">
 
-    <form:form
-            modelAttribute="contact"
-            id="contactUpdateForm"
-            method="post"
-            cssClass="form-horizontal">
-
-        <c:if test="${not empty message}">
-            <div id="message" class="${message.type}">${message.message}</div>
-        </c:if>
-        <div class="control-group" id="numero2">
-            <form:label path="firstName" cssClass="control-label">
-                ${labelContactFirstName}*
-            </form:label>
-            <div class="controls">
-                <form:input path="firstName" /> <span class="help-inline">Inline help text</span>
+            <c:if test="${not empty message}">
+                <div id="message" class="${message.type}">${message.message}</div>
+            </c:if>
+            <div class="control-group" id="numero2">
+                <form:label path="firstName" cssClass="control-label">
+                    ${labelContactFirstName}*
+                </form:label>
+                <div class="controls">
+                    <form:input path="firstName" /> <span class="help-inline">Inline help text</span>
+                </div>
+                <div>
+                    <form:errors path="firstName" cssClass="error" />
+                </div>
             </div>
-            <div>
-                <form:errors path="firstName" cssClass="error" />
+
+            <div class="control-group">
+                <form:label path="lastName" cssClass="control-label">
+                    ${labelContactLastName}*
+                </form:label>
+                <div class="controls">
+                    <form:input path="lastName" />
+                </div>
+                <div>
+                    <form:errors path="lastName" cssClass="error" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <form:label path="birthDate" cssClass="control-label">
+                    ${labelContactBirthDate}*
+                </form:label>
+                <div class="controls">
+                    <form:input path="birthDate" />
+                </div>
+                <div>
+                    <form:errors path="birthDate" cssClass="error" />
+                </div>
+            </div>
+
+            <div class="control-group">
+                <form:label path="description" cssClass="control-label">
+                    ${labelContactDescription}*
+                </form:label>
+                <div class="controls">
+                    <form:textarea cols="60" rows="8" path="description" id="contactDescription"/>
+                </div>
+                <div>
+                    <form:errors path="description" cssClass="error" />
+                </div>
+            </div>
+
+            <form:hidden path="id" />
+            <form:hidden path="version" />
+
+            <!-- new button styles -->
+            <button class="btn btn-mini btn-primary" type="submit" id="joy_ride_2">Save</button>
+            <button class="btn btn-mini" type="reset">Reset</button>
+
+        </form:form>
+    </div>
+
+    <div class="container">
+        <!-- Modal -->
+        <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Modal header</h3>
+            </div>
+            <div class="modal-body">
+                <div id="output"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
             </div>
         </div>
 
-        <div class="control-group">
-            <form:label path="lastName" cssClass="control-label">
-                ${labelContactLastName}*
-            </form:label>
-            <div class="controls">
-                <!--
-                Example for inline editing
-                <a href="#"
-                   id="lastname"
-                   data-type="text"
-                   data-pk="${contact.id}"
-                   data-url="/inline/edit/id/${contact.id}">${contact.lastName}</a>
-
-                <a href="#" id="lastname">${contact.lastName}</a>
-                -->
-                <form:input path="lastName" />
-            </div>
-            <div>
-                <form:errors path="lastName" cssClass="error" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <form:label path="birthDate" cssClass="control-label">
-                ${labelContactBirthDate}*
-            </form:label>
-            <div class="controls">
-                <form:input path="birthDate" />
-            </div>
-            <div>
-                <form:errors path="birthDate" cssClass="error" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <form:label path="description" cssClass="control-label">
-                ${labelContactDescription}*
-            </form:label>
-            <div class="controls">
-                <form:textarea cols="60" rows="8" path="description" id="contactDescription"/>
-            </div>
-            <div>
-                <form:errors path="description" cssClass="error" />
-            </div>
-        </div>
-
-        <form:hidden path="id" />
-        <form:hidden path="version" />
-
-        <!-- new button styles -->
-        <button class="btn btn-mini btn-primary" type="submit" id="joy_ride_2">Save</button>
-        <button class="btn btn-mini" type="reset">Reset</button>
-
-    </form:form>
+    </div>
 </div>
