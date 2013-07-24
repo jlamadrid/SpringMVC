@@ -13,8 +13,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=8" />
 
-
-
         <!--
         Note the use of the <jsp:text/> tag within the <script> tag. This is because JSPX will autocollapse
         tags without a body. So, the tag <script …></script> in the file will end up as <script …/> in the
@@ -28,8 +26,6 @@
         -->
         <spring:url value="/resources/scripts/jquery-1.7.1.js" var="jquery_js" />
         <spring:url value="/resources/scripts/jquery-ui-1.8.16.custom.min.js" var="jquery_ui_js" />
-        <script src="${jquery_js}" type="text/javascript"><jsp:text/></script>
-        <script src="${jquery_ui_js}" type="text/javascript"><jsp:text/></script>
 
         <spring:url value="/resources/styles/custom-theme/jquery-ui-1.8.16.custom.css" var="jquery_ui_theme_css" />
         <link rel="stylesheet" type="text/css" media="screen" href="${jquery_ui_theme_css}" />
@@ -40,21 +36,12 @@
         <spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url" />
 
         <link rel="stylesheet" type="text/css" media="screen" href="${jqgrid_css}" />
-        <script type="text/javascript" src="${jqgrid_locale_url}"><jsp:text/></script>
-        <script type="text/javascript" src="${jqgrid_url}"><jsp:text/></script>
-
-        <!-- CKEditor -->
-        <spring:url value="/resources/ckeditor/ckeditor.js" var="ckeditor_url" />
-        <spring:url value="/resources/ckeditor/adapters/jquery.js" var="ckeditor_jquery_url" />
-        <script type="text/javascript" src="${ckeditor_url}"><jsp:text/></script>
-        <script type="text/javascript" src="${ckeditor_jquery_url}"><jsp:text/></script>
 
         <!-- Bootstrap -->
         <spring:url value="/resources/scripts/bootstrap.min.js" var="bootstrap_js" />
         <spring:url value="/resources/styles/bootstrap.min.css" var="bootstrap_css" />
         <spring:url value="/resources/styles/bootstrap-responsive.min.css" var="bootstrap_responsive_css" />
 
-        <script src="${bootstrap_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_css}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_responsive_css}" />
 
@@ -68,7 +55,6 @@
         <spring:url value="/resources/scripts/bootstrap-editable.js" var="bootstrap_editable_js" />
         <spring:url value="/resources/styles/bootstrap-editable.css" var="bootstrap_editable_css" />
 
-        <script src="${bootstrap_editable_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap_editable_css}" />
 
         <!-- Bootstrap dropdown
@@ -77,21 +63,38 @@
         <script src="${bootstrap_dropdown_js}" type="text/javascript"><jsp:text/></script>
         -->
 
-
         <!-- jquery-joyride
         http://zurb.com/playground/jquery-joyride-feature-tour-plugin
         -->
         <spring:url value="/resources/scripts/jquery.joyride-2.1.js" var="jquery_joyride_js" />
         <spring:url value="/resources/styles/joyride-2.1.css" var="joyride_css" />
-
-        <script src="${jquery_joyride_js}" type="text/javascript"><jsp:text/></script>
         <link rel="stylesheet" type="text/css" media="screen" href="${joyride_css}" />
 
         <!-- jquery-form
         http://malsup.com/jquery/form/
         -->
         <spring:url value="/resources/scripts/jquery.form.js" var="jquery_form_js" />
-        <script src="${jquery_form_js}" type="text/javascript"><jsp:text/></script>
+
+        <!-- bootstrap-wysihtml5 -->
+        <spring:url value="/resources/scripts/bootstrap-wysihtml.js" var="bootstrap-wysihtml_js" />
+        <spring:url value="/resources/scripts/wysihtml.min.js" var="edit_js" />
+
+        <spring:url value="/resources/styles/bootstrap-wysihtml.css" var="bootstrap-wysihtml5_css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${bootstrap-wysihtml5_css}" />
+
+
+        <script type="text/javascript" src="${jquery_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${jquery_ui_js}"><jsp:text/></script>
+
+
+        <script type="text/javascript" src="${bootstrap_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${jqgrid_locale_url}"><jsp:text/></script>
+        <script type="text/javascript" src="${jqgrid_url}"><jsp:text/></script>
+        <script type="text/javascript" src="${bootstrap_editable_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${jquery_joyride_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${jquery_form_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${edit_js}"><jsp:text/></script>
+        <script type="text/javascript" src="${bootstrap-wysihtml_js}"><jsp:text/></script>
 
 
         <style type="text/css">
@@ -131,7 +134,7 @@
 
             <div class="row-fluid">
                 <div class="span2">
-                    <div class="well sidebar-nav">
+                    <div class="sidebar-nav">
 		                <tiles:insertAttribute name="menu" ignore="true" />
                     </div><!--/.well -->
                 </div><!--/span-->
@@ -148,5 +151,6 @@
         </footer>
 
         <tiles:insertAttribute name="joyride" ignore="true"/>
+
 	</body>
 </html>

@@ -31,14 +31,6 @@
             changeYear: true
         });
 
-        //add ck editor
-        $("#contactDescription").ckeditor(
-            {
-                toolbar : 'Basic',
-                uiColor : '#CCCCCC'
-            }              
-        );
-
         var options = {
             target:        '#output',   // target element(s) to be updated with server response
             beforeSubmit:  showRequest,  // pre-submit callback
@@ -202,4 +194,7 @@
         </div>
 
     </div>
+
 </div>
+
+

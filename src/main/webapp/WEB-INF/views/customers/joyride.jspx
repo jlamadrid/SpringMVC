@@ -9,7 +9,7 @@
     <ol id="joyRideTipContent">
         <li data-id="joy_ride_1" data-text="Next" class="custom" data-options="tipLocation:top;tipAnimation:fade">
             <h5>Inline Table Edit</h5>
-            <p>Click on a column attribute anbd edit away.</p>
+            <p>Click on a column attribute and edit away.</p>
         </li>
         <li data-id="joy_ride_2" data-button="Close" data-options="tipLocation:top;tipAnimation:fade">
             <h5>Inline Table Edit</h5>
