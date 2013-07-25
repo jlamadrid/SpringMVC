@@ -12,6 +12,11 @@
     <spring:message code="label_contact_last_name" var="labelContactLastName"/>
     <spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
 
+
+    <spring:message code="menu_add_contact" var="menuAddContact"/>
+    <spring:url value="/contacts?form" var="addContactUrl"/>
+    <spring:url value="/contacts" var="contactsUrl"/>
+
     <h4>${labelContactList}</h4>
 
     <spring:url value="/api/contacts" var="showContactUrl"/>
@@ -58,7 +63,16 @@
         <div id="message" class="${message.type}">${message.message}</div>
     </c:if>
 
-    <table id="list"><tr><td/></tr></table>
-    <div id="pager"></div>
+    <div class="container">
+        <table id="list"><tr><td/></tr></table>
+        <div id="pager"></div>
+    </div>
+
+
+
+    <div class="container">
+        <a href="${addContactUrl}">  ${menuAddContact}</a>,
+        <a href="${contactsUrl}/backbone-contacts">Backbone View</a>
+    </div>
 
 </div>

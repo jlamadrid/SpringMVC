@@ -150,7 +150,9 @@
             <tiles:insertAttribute name="footer" ignore="true"/>
         </footer>
 
+        <!--
         <tiles:insertAttribute name="joyride" ignore="true"/>
+        -->
 
 	</body>
 </html>

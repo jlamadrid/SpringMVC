@@ -106,7 +106,7 @@
 
             <div class="row-fluid">
                 <div class="span2">
-                    <div class="well sidebar-nav">
+                    <div class="sidebar-nav">
 		                <tiles:insertAttribute name="menu" ignore="true" />
                     </div><!--/.well -->
                 </div><!--/span-->
